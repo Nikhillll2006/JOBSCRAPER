@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Portal</title>
+    <style>
+        /* Styling */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(to right, #155b66, #811839);
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .container {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 20px;
+            width: 90%;
+            max-width: 1200px;
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+        .search-bar {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .search-bar input[type="text"] {
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            width: 200px;
+        }
+        .search-bar button {
+            padding: 10px;
+            font-size: 16px;
+            border: none;
+            background-color: #4d8f55;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .search-bar button:hover {
+            background-color: #ACB6E5;
+        }
+        .categories, .job-listings {
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .categories h3, .job-listings h2 {
+            margin-top: 0;
+        }
+        .category-btn {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            background-color: #4d8f55;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .category-btn:hover {
+            background-color: #ACB6E5;
+        }
+        .job {
+            padding: 15px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #fff;
+        }
+        .job h4 {
+            margin: 0;
+        }
+        .job p {
+            margin: 5px 0;
+        }
+        .visit-btn {
+            padding: 5px 10px;
+            font-size: 14px;
+            background-color: #4d8f55;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 10px;
+        }
+        .visit-btn:hover {
+            background-color: #ACB6E5;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- Search Bar -->
+    <div class="search-bar">
+        <form action="https://www.google.com/search" method="GET" target="_blank">
+            <input type="text" name="q" placeholder="Search for jobs..." required>
+            <button type="submit">Search</button>
+        </form>
+    </div>
+
+    <!-- Categories Section with Buttons -->
+    <div class="categories">
+        <h3>Job Categories</h3>
+        <button class="category-btn" onclick="fetchJobs('Part-time')">Part-time Jobs</button>
+        <button class="category-btn" onclick="fetchJobs('Full-time')">Full-time Jobs</button>
+        <button class="category-btn" onclick="fetchJobs('Internships')">Internships</button>
+    </div>
+
+    <!-- Job Listings Section -->
+    <div class="job-listings">
+        <h2>Featured Jobs</h2>
+        <div id="jobs-container">
+            <!-- Job listings will be inserted here dynamically -->
+        </div>
+    </div>
+</div>
+
+<script>
+    async function fetchJobs(category) {
+        const jobsContainer = document.getElementById('jobs-container');
+        jobsContainer.innerHTML = '<p>Loading jobs...</p>';
+
+        try {
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            const mockJobData = {
+                'Part-time': [
+                    { title: 'Retail Assistant', location: 'Tamil Nadu, CA', company: 'Retail Inc.', description: 'Assist customers in-store and manage inventory.', link: 'https://in.indeed.com/q-sales-assistant-l-chennai,-tamil-nadu-jobs.html' },
+                    { title: 'Delivery Driver', location: 'Tamil Nadu', company: 'Fast Delivery Co.', description: 'Deliver packages within specified regions.', link: 'https://www.simplyhired.co.in/search?q=part+time+driver&l=chennai%2C+tamil+nadu' },
+                    { title: 'Customer Service Rep', location: 'Tamil Nadu', company: 'HelpDesk Ltd.', description: 'Provide customer service support via phone.', link: 'https://in.indeed.com/q-part-time-customer-service-l-tamil-nadu-jobs.html?vjk=6dc429e3d1648718' },
+                    { title: 'Data Entry Clerk', location: 'Tamil Nadu', company: 'Office Solutions', description: 'Perform data entry and administrative tasks.', link: 'https://www.simplyhired.co.in/search?q=data+entry&l=chennai%2C+tamil+nadu' }
+                ],
+                'Full-time': [
+                    { title: 'Software Engineer', location: 'Tamil Nadu', company: 'Tech Innovators', description: 'Develop and maintain software applications.', link: 'https://in.indeed.com/q-software-engineer-l-chennai,-tamil-nadu-jobs.html?vjk=f0ae85dab9db8189' },
+                    { title: 'Marketing Manager', location: 'Tamil Nadu', company: 'Market Leaders', description: 'Oversee marketing strategies and campaigns.', link: 'https://www.simplyhired.co.in/search?q=marketing+manager&l=chennai%2C+ta' },
+                    { title: 'Accountant', location: 'Tamil Nadu', company: 'Finance Experts', description: 'Manage financial records and budgets.', link: 'https://www.simplyhired.co.in/search?q=accounting&l=chennai%2C+tamil+nadu' },
+                    { title: 'Project Manager', location: 'Tamil Nadu', company: 'ProjectCo', description: 'Coordinate and manage project activities.', link: 'https://www.simplyhired.co.in/search?q=project+manager&l=chennai%2C+tamil+nadu' }
+                ],
+                'Internships': [
+                    { title: 'Web Development Intern', location: 'Tamil Nadue', company: 'Web Solutions', description: 'Assist in developing front-end web applications.', link: 'https://www.simplyhired.co.in/search?q=web+development+internship&l=chennai%2C+tamil+nadu' },
+                    { title: 'Data Science Intern', location: 'Tamil Nadu', company: 'DataInsights', description: 'Work with data scientists to analyze large datasets.', link: 'https://www.simplyhired.co.in/search?q=data+science+internship&l=chennai%2C+tamil+nadu' },
+                    { title: 'Graphic Design Intern', location: 'Tamil Nadu', company: 'DesignPro', description: 'Create and edit design elements for projects.', link: 'https://www.simplyhired.co.in/search?q=internship+in+graphic+design&l=chennai%2C+tamil+nadu' },
+                    { title: 'Content Writing Intern', location: 'Tamil Nadu', company: 'WriteRight', description: 'Write and edit content for digital platforms.', link: 'https://www.simplyhired.co.in/search?q=content+writing+internship&l=chennai%2C+tamil+nadu' }
+                ]
+            };
+
+            const jobs = mockJobData[category] || [];
+            jobsContainer.innerHTML = jobs.length
+                ? jobs.map(job => `
+                    <div class="job">
+                        <h4>${job.title}</h4>
+                        <p><strong>Location:</strong> ${job.location}</p>
+                        <p><strong>Company:</strong> ${job.company}</p>
+                        <p><strong>Description:</strong> ${job.description}</p>
+                        <a href="${job.link}" class="visit-btn" target="_blank">Visit</a>
+                    </div>
+                  `).join('')
+                : '<p>No jobs available in this category.</p>';
+
+        } catch (error) {
+            jobsContainer.innerHTML = '<p>Error loading jobs. Please try again later.</p>';
+            console.error(error);
+        }
+    }
+</script>
+
+</body>
+</html>
